@@ -15,6 +15,12 @@ def test_linreg():
     pl_model = PLLinReg()
     pl_model.fit(X, y)
 
-    assert np.allclose(sk_model.predict(X_test)[0], pl_model.predict(X_test)[0])
-    assert np.allclose(sk_model.coef_, pl_model.coef_)
-    assert np.allclose(sk_model.intercept_, pl_model.intercept_)
+    assert np.allclose(
+        sk_model.predict(X_test)[0], pl_model.predict(X_test)[0]
+    ), f"LinReg predcit failed, should have been:{sk_model.predict(X_test)[0]} but was:{pl_model.predict(X_test)[0]}"
+    assert np.allclose(
+        sk_model.coef_, pl_model.coef_
+    ), f"LinReg coefficans failed, should have been:{sk_model.coef_} but was:{pl_model.coef_}"
+    assert np.allclose(
+        sk_model.intercept_, pl_model.intercept_
+    ), f"LinReg intercept failed, should have been:{sk_model.intercept_} but was:{pl_model.intercept_}"
