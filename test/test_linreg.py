@@ -1,6 +1,6 @@
 import numpy as np
-from sklearn.linear_model import LinearRegression as SKLearnLinReg
-from picolearn.linear import LinearRegrasion as PLLinReg
+from sklearn.linear_model import LinearRegression as SKLearnLinearRegression
+from picolearn.linear import LinearRegrasion as PicoLearnLinearRegression
 
 
 def test_linreg():
@@ -9,10 +9,10 @@ def test_linreg():
     y = np.dot(X, np.array([1, 2])) + 3
     X_test = np.array([[3, 5]])
 
-    sk_model = SKLearnLinReg()
+    sk_model = SKLearnLinearRegression()
     sk_model.fit(X, y)
 
-    pl_model = PLLinReg()
+    pl_model = PicoLearnLinearRegression()
     pl_model.fit(X, y)
 
     assert np.allclose(
