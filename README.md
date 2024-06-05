@@ -28,6 +28,19 @@ y_pred = model.predict(X_test)
 
 ```
 
+## Model implemented
+
+this are the model that have been implemented and is planed to be implemented
+
+- [x] Linear Regreassion
+- [ ] Support Vector Machine Classifier
+
+
+## Implementation validation 
+
+Each model is implemented then compared to Sklearns equivelent model. 
+This can be seen in the [tests](https://github.com/AxelGard/pico-learn/tree/master/test).
+
 ## install 
 
 Due to pico is made for learning purposes I have not added it to PyPi.
