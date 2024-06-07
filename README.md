@@ -34,6 +34,7 @@ this are the model that have been implemented and is planed to be implemented
 
 - [x] Linear Regreassion
 - [ ] Support Vector Machine Classifier
+- [ ] Decision Tree Classifier
 
 
 ## Implementation validation 
