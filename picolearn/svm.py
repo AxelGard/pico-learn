@@ -68,5 +68,4 @@ class LinearSVC:
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         linear_outputs = np.dot(X, self.coef_.T) - self.intercept_
-        print(linear_outputs)
         return self.classes[np.argmax(linear_outputs, axis=1)]

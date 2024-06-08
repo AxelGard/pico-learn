@@ -1,13 +1,13 @@
 import numpy as np
 from sklearn.svm import LinearSVC as SKLearnSVC
-from picolearn.svm import SVC as PicoLearnSVC
+from picolearn.svm import LinearSVC as PicoLearnSVC
+from sklearn.datasets import make_regression, make_classification
 
 
 def test_svc():
 
-    X = np.array([[-1, -1], [-2, -1], [1, 1], [2, 1]])
-    y = np.array([1, 1, 2, 2])
-    X_test = np.array([[-0.8, -1]])
+    X, y = make_classification(n_samples=200, random_state=1)
+    X_test, _ = make_classification(n_samples=5, random_state=2)
 
     sk_model = SKLearnSVC()
     sk_model.fit(X, y)
