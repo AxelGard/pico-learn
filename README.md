@@ -33,6 +33,8 @@ y_pred = model.predict(X_test)
 this are the model that have been implemented and is planed to be implemented
 
 - [x] Linear Regreassion
+- [x] KNN Regreassion
+- [x] KNN Classifier 
 - [ ] Support Vector Machine Classifier
 - [ ] Decision Tree Classifier
 
