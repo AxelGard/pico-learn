@@ -35,8 +35,11 @@ this are the model that have been implemented and is planed to be implemented
 - [x] Linear Regreassion
 - [x] KNN Regreassion
 - [x] KNN Classifier 
-- [ ] Support Vector Machine Classifier
+- [x] Support Vector Machine Classifier
 - [ ] Decision Tree Classifier
+- [ ] Neural Network?? 
+- [ ] KMeans??
+- [ ] Random Forest ??
 
 
 ## Implementation validation 
