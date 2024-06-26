@@ -1,71 +1,39 @@
 import numpy as np
 
 
-class SVC:
-    """Support Vector Machine Classifier"""
-
-    def __init__(self, kernal="linear") -> None:
-        self.coef_: np.ndarray = None  # noted as w
-        self.intercept_ = 0.0
-
-    def fit(self, X: np.ndarray, y: np.ndarray, epochs=1000, learning_rate=1e-2):
-        w = np.zeros(X.shape[1])
-        b = 0
-        for _ in range(epochs):
-            for i in range(len(X)):
-                x_i = X[i]
-                y_i = y[i]
-                if y_i * np.dot(x_i, w) + b < 1:
-                    w += learning_rate * y_i * x_i
-                    b += learning_rate * y_i
-
-        self.coef_ = np.array([w])
-        self.intercept_ = np.array([b])
-        return self
-
-    def predict(self, X: np.ndarray) -> np.ndarray:
-        return np.sign(np.dot(X.T, self.coef_) + self.intercept_)
-
-
 class LinearSVC:
-    def __init__(self, learning_rate=0.001, lamda_parm=0.01, epochs=1000):
-        self.learning_rate = learning_rate
-        self.lamda_parm = lamda_parm
-        self.epochs = epochs
-        self.classes: np.ndarray = None
-        self.coef_: np.ndarray = None
-        self.intercept_: np.ndarray = None
+    """
+    Linear Support Vector Machine Classifier
+    src: https://youtu.be/T9UcK-TxQGw?si=5B1pKYBB3HP-jqmm
+    """
+
+    def __init__(self, learning_rate=0.001, lambda_param=0.01, n_iters=1000) -> None:
+        self.lr = learning_rate
+        self.lambda_param = lambda_param
+        self.n_iters = n_iters
+        self.w = np.zeros(1)  # weights
+        self.b = 0  # baies
 
     def fit(self, X: np.ndarray, y: np.ndarray):
+        _, n_featrues = X.shape
 
-        _, nr_of_features = X.shape
-        self.classes = np.unique(y)
-        nr_of_classes = len(self.classes)
+        y_ = np.where(y <= 0, -1, 1)  # y values need to be 1 or -1
 
-        self.coef_ = np.zeros((nr_of_classes, nr_of_features))
-        self.intercept_ = np.zeros(nr_of_classes)
+        self.w = np.zeros(n_featrues)  # random wights is better the 0
+        self.b = 0
 
-        for cls_idx, class_ in enumerate(self.classes):
-            y_where_cls = np.where(y == class_, 1, -1)
-            for _ in range(self.epochs):
-                for i, x_i in enumerate(X):
-                    if (
-                        y_where_cls[i]
-                        * (np.dot(x_i, self.coef_[cls_idx]) - self.intercept_[cls_idx])
-                        >= 1
-                    ):
-                        self.coef_[cls_idx] -= self.learning_rate * (
-                            2 * self.lamda_parm * self.coef_[cls_idx]
-                        )
-                    else:
-                        self.coef_[cls_idx] -= self.learning_rate * (
-                            2 * self.lamda_parm * self.coef_[cls_idx]
-                            - np.dot(x_i, y_where_cls[i])
-                        )
-                        self.intercept_[cls_idx] -= self.learning_rate * y_where_cls[i]
+        for _ in range(self.n_iters):
+            for idx, x_i in enumerate(X):
+                con = y_[idx] * (np.dot(x_i, self.w) - self.b) >= 1
+                if con:
+                    self.w -= self.lr * (2 * self.lambda_param * self.w)
+                else:
+                    self.w -= self.lr * (
+                        2 * self.lambda_param * self.w - np.dot(x_i, y_[idx])
+                    )
+                    self.b -= self.lr * y_[idx]
 
         return self
 
-    def predict(self, X: np.ndarray) -> np.ndarray:
-        linear_outputs = np.dot(X, self.coef_.T) - self.intercept_
-        return self.classes[np.argmax(linear_outputs, axis=1)]
+    def predict(self, X: np.ndarray):
+        return np.sign(np.dot(X, self.w) - self.b)
